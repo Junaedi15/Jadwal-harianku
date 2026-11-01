@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Jadwal">
 <link rel="apple-touch-icon" href="icon-192.png">
-<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f2d3d'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23b4c6da' stroke-width='3.5'/%3E%3Cpath d='M23 33l7 7 12-14' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -18,9 +18,9 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0a111c;--card:#121c2b;--ink:#e9eef6;--mute:#93a3b8;--line:#223045;--hero:#1b2837;--acc:#8fa9c4;--kuliah:#8fb0d8;--belajar:#b3a2d6;--olahraga:#e0a57d;--kerja:#8cc5a0;--ibadah:#d3bb7a;--ping:#d89aa8;--lain:#a3adb9}}
 :root[data-theme="dark"]{color-scheme:dark;--bg:#0a111c;--card:#121c2b;--ink:#e9eef6;--mute:#93a3b8;--line:#223045;--hero:#1b2837;--acc:#8fa9c4;--kuliah:#8fb0d8;--belajar:#b3a2d6;--olahraga:#e0a57d;--kerja:#8cc5a0;--ibadah:#d3bb7a;--ping:#d89aa8;--lain:#a3adb9}
 *{box-sizing:border-box}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);overflow-x:hidden}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-main{max-width:700px;margin:0 auto;padding:14px 14px 150px}
+main{max-width:700px;margin:0 auto;padding:14px 14px calc(104px + var(--bo,0px));overflow-x:clip}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:3px solid var(--hi);outline-offset:2px}
@@ -49,15 +49,16 @@ button{cursor:pointer}
 .tab.on{background:var(--hero);border-color:var(--hero);color:var(--onhero)}.tab.on strong{color:var(--onhero)}.tab.on em{background:#ffffff33}
 .sec{display:flex;justify-content:space-between;align-items:baseline;margin:0 2px 12px}.sec h2{margin:0;font-size:1.2rem;font-weight:800;letter-spacing:-.02em}.sec span{color:var(--mute);font-size:.85rem}
 ul{list-style:none;margin:0;padding:0}
-li{display:grid;grid-template-columns:44px 16px 1fr;column-gap:8px}
+li{display:grid;grid-template-columns:44px 16px minmax(0,1fr);column-gap:8px}
 .tm{text-align:right;font-variant-numeric:tabular-nums;padding-top:13px;line-height:1.25;font-size:.8rem;color:var(--mute)}.tm b{display:block;color:var(--ink);font-size:.9rem}
 .dot{position:relative}.dot::before{content:"";position:absolute;left:7px;top:0;bottom:-10px;width:2px;background:var(--line)}li:last-child .dot::before{display:none}
 .dot::after{content:"";position:absolute;left:2px;top:19px;width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px var(--bg)}
-.cd{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 6px 10px 12px;margin-bottom:10px;display:flex;gap:10px;align-items:flex-start}
-.cd.now{border-color:var(--c);box-shadow:0 0 0 2px color-mix(in srgb,var(--c) 25%,transparent)}
+.cd{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 6px 10px 12px;margin-bottom:10px;display:flex;gap:10px;align-items:flex-start;min-width:0}
+.cd.now{background:color-mix(in srgb,var(--c) 9%,var(--card));border-color:color-mix(in srgb,var(--c) 40%,var(--line))}
+li.nw .dot::after{left:1px;top:18px;width:14px;height:14px;box-shadow:0 0 0 3px var(--bg),0 0 0 5px color-mix(in srgb,var(--c) 50%,transparent)}
 .chk{appearance:none;-webkit-appearance:none;width:24px;height:24px;border:2px solid var(--c);border-radius:50%;margin:2px 0 0;flex:none;display:grid;place-items:center;background:none}
-.chk:checked{background:var(--c)}.chk:checked::after{content:"✓";color:var(--card);font-size:.85rem;font-weight:800}
-.bd{flex:1;min-width:0}.t{font-weight:700;word-break:break-word}.done .t{text-decoration:line-through;color:var(--mute)}.done{opacity:.65}
+.chk:checked{background:var(--c)}
+.bd{flex:1;min-width:0}.t{font-weight:700;overflow-wrap:anywhere}.done .t{text-decoration:line-through;color:var(--mute)}.done{opacity:.65}
 .mt{font-size:.8rem;color:var(--mute);margin-top:2px}
 .chip{font-size:.72rem;font-weight:700;color:color-mix(in srgb,var(--c) 70%,var(--ink));background:color-mix(in srgb,var(--c) 14%,transparent);padding:1px 8px;border-radius:99px;margin-right:6px;white-space:nowrap}
 .chip.a{background:var(--acc);color:var(--card)}
@@ -78,12 +79,12 @@ textarea{height:70px;resize:vertical;font-size:.8rem}
 .err{color:var(--ink);font-weight:700;font-size:.82rem;min-height:1.1em;margin:6px 0 0}
 .sw{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.sw span{font-weight:600}
 .note{font-size:.78rem;color:var(--mute);margin:6px 0 10px}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(146px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);border-radius:12px;padding:10px 14px;font-size:.88rem;max-width:calc(100% - 28px);display:flex;gap:12px;align-items:center;z-index:40;box-shadow:0 8px 24px #0006}
+.toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(12px + env(safe-area-inset-top,0px));background:var(--ink);color:var(--bg);border-radius:12px;padding:10px 14px;font-size:.88rem;max-width:calc(100% - 28px);display:flex;gap:12px;align-items:center;z-index:40;box-shadow:0 8px 24px #0006}
 .toast button{background:none;border:0;color:var(--hi);font-weight:700;padding:0}
-@media (max-width:420px){.tiles{grid-template-columns:1fr 1fr}.tiles .tile:last-child{grid-column:1/-1}li{grid-template-columns:40px 14px 1fr}}
+@media (max-width:420px){.tiles{grid-template-columns:1fr 1fr}.tiles .tile:last-child{grid-column:1/-1}li{grid-template-columns:40px 14px minmax(0,1fr)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
-dialog{max-height:calc(100dvh - 24px);overflow:auto}
+dialog{max-height:calc(100dvh - 24px - var(--bo,0px));bottom:var(--bo,0px);overflow:auto}
 .i{--c:var(--ibadah)}
 .u{font-size:.8rem;font-weight:600;color:var(--mute)}
 .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--line);padding:4px;border-radius:14px;margin-bottom:14px}
@@ -119,8 +120,12 @@ dialog input[type=date]{width:100%;background:var(--bg);border:1px solid var(--l
 .lnk{border:0;background:none;color:var(--acc);font-weight:700}
 
 
-.bnav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:700px;z-index:5;display:grid;grid-template-columns:repeat(5,1fr);background:var(--card);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
-.bnav button{border:0;background:none;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.68rem;font-weight:700;padding:4px 0;border-radius:10px}.bnav button.on{color:var(--acc)}
+.bnav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:700px;z-index:5;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:var(--card);border-top:1px solid var(--line);padding:6px 6px calc(8px + env(safe-area-inset-bottom,0px) + var(--bo,0px))}
+.bnav button{border:0;background:none;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.7rem;font-weight:700;padding:7px 0 6px;border-radius:12px}
+.bnav button.on{color:var(--acc);background:color-mix(in srgb,var(--acc) 13%,transparent)}
+.addp{height:40px;border:0;border-radius:99px;background:var(--hero);color:var(--onhero);font-weight:700;display:flex;align-items:center;gap:6px;padding:0 14px 0 11px}
+.addp[hidden]{display:none}
+@media (max-width:350px){.addp span{display:none}.addp{padding:0 11px}}
 .mini{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:99px;padding:3px 10px;font-size:.74rem;font-weight:600;margin:6px 6px 0 0}
 .ac{display:flex;flex-wrap:wrap}
 .cd.canc{opacity:.55}.cd.canc .t{text-decoration:line-through}
@@ -131,7 +136,7 @@ dialog input[type=date]{width:100%;background:var(--bg);border:1px solid var(--l
 .heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px}.heat i{aspect-ratio:1;border-radius:4px;background:color-mix(in srgb,var(--acc) calc(var(--v)*100%),var(--line))}.heat i.f{background:none;box-shadow:inset 0 0 0 1px var(--line)}
 .rg2{display:flex;gap:28px;margin-bottom:12px}.rg2 b{font-size:1.5rem;font-weight:800;display:block;line-height:1.1}.rg2 small{color:var(--mute)}
 .sp{display:flex;gap:4px;align-items:flex-end;height:44px}.sp i{flex:1;height:var(--h);min-height:3px;background:var(--acc);border-radius:3px 3px 1px 1px}
-.tmr{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));width:calc(100% - 28px);max-width:672px;background:var(--hero);color:var(--onhero);border-radius:16px;padding:10px 14px;display:flex;align-items:center;gap:12px;z-index:6}.tmr[hidden]{display:none}
+.tmr{background:var(--hero);color:var(--onhero);border-radius:16px;padding:10px 14px;display:flex;align-items:center;gap:12px;margin-bottom:12px}.tmr[hidden]{display:none}
 .tmr div{flex:1;min-width:0;display:flex;flex-direction:column}.tmr small{color:var(--hi);font-weight:700}.tmr strong{font-size:1.4rem;font-variant-numeric:tabular-nums}.tmr button{border:1px solid #ffffff55;background:none;color:inherit;border-radius:99px;padding:6px 12px}
 .fh{background:var(--hero);color:var(--onhero);border-radius:22px;padding:20px;margin-bottom:12px}.fh small{opacity:.8;display:block}.fh h2{margin:2px 0 6px;font-size:1.9rem;font-weight:800;letter-spacing:-.02em}.fh .meter{background:#ffffff2e;margin:10px 0 6px}.fh .meter i{background:var(--hi)}
 .ft{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.ft .tile{min-height:78px}.ft b{font-size:.92rem}
@@ -144,7 +149,7 @@ dialog input[type=date]{width:100%;background:var(--bg);border:1px solid var(--l
 
 
 .tb{display:flex;gap:8px}
-.spage{position:fixed;inset:0;z-index:30;background:var(--bg);overflow-y:auto;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}.spage[hidden]{display:none}
+.spage{position:fixed;inset:0 0 var(--bo,0px) 0;z-index:30;background:var(--bg);overflow-y:auto;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}.spage[hidden]{display:none}
 .sp-in{max-width:700px;margin:0 auto;padding:12px 16px 40px}
 .sp-h{display:flex;align-items:center;gap:10px;margin-bottom:16px}.sp-h h2{flex:1;margin:0;font-size:1.3rem;font-weight:800;letter-spacing:-.02em}.sp-h .round[hidden]{display:none}
 .grp{margin-bottom:18px}.grp>h4{margin:0 4px 6px;font-size:.78rem;color:var(--mute);font-weight:700}
@@ -159,11 +164,15 @@ button.sr:active,label.sr:active{background:var(--bg)}
 .pvg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px;width:100%}.pv{background:var(--bg);border-radius:12px;padding:8px 10px}.pv small{display:block;color:var(--mute);font-size:.74rem}.pv b{font-size:1.1rem;font-variant-numeric:tabular-nums}
 .schi{flex:1;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 14px;font-size:1rem;color:var(--ink)}
 .spage .btn{margin-top:0}.spage .note{margin:8px 4px 0}
+.chk:checked{background:var(--c) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/68% no-repeat}
+.chk:checked::after{content:none}
+.chev svg,.round svg{display:block}
 </style>
 </head>
 <body>
 <main>
-  <div class="top"><h1>Jadwal Harianku</h1><div class="tb"><button class="round" id="srch" aria-label="Cari"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button><button class="round" id="gear" aria-label="Pengaturan"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></button></div></div>
+  <div class="top"><h1>Jadwal Harianku</h1><div class="tb"><button class="addp" id="fab"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span id="fabT">Kegiatan</span></button><button class="round" id="srch" aria-label="Cari"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button><button class="round" id="gear" aria-label="Pengaturan"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+  <div id="tmr" class="tmr" hidden></div>
     <div id="vPlan">
     <section class="hero" id="hero" aria-live="polite"></section>
     <div class="tiles" id="tiles"></div>
@@ -176,7 +185,7 @@ button.sr:active,label.sr:active{background:var(--bg)}
   <div id="vFin" hidden></div>
   <div id="vRev" hidden></div>
 </main>
-<button class="fab" id="fab"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span id="fabT">Kegiatan</span></button>
+
 
 <dialog id="dF">
   <h3 id="ftitle">Tambah kegiatan</h3>
@@ -201,28 +210,26 @@ button.sr:active,label.sr:active{background:var(--bg)}
 </dialog>
 
 <div id="dS" class="spage" hidden role="dialog" aria-modal="true" aria-label="Pengaturan"><div class="sp-in">
-<div class="sp-h"><button class="round" id="sBack" aria-label="Kembali" hidden>‹</button><h2 id="sTitle">Pengaturan</h2><button class="round" id="closeS" aria-label="Tutup">×</button></div>
-<section data-p="hub"><div class="grp"><h4>Umum</h4><div class="sl"><button class="sr" data-sp="rem"><span class="tx2"><b>Pengingat</b><small id="sub-rem"></small></span><span class="chev">›</span></button><button class="sr" data-sp="ibd"><span class="tx2"><b>Ibadah</b><small id="sub-ibd"></small></span><span class="chev">›</span></button><button class="sr" data-sp="day"><span class="tx2"><b>Jadwal harian</b><small id="sub-day"></small></span><span class="chev">›</span></button></div></div>
-<div class="grp"><h4>Personalisasi</h4><div class="sl"><button class="sr" data-sp="look"><span class="tx2"><b>Tampilan</b><small id="sub-look"></small></span><span class="chev">›</span></button><button class="sr" data-sp="tpl"><span class="tx2"><b>Template jadwal</b><small id="sub-tpl"></small></span><span class="chev">›</span></button></div></div>
-<div class="grp"><h4>Data</h4><div class="sl"><button class="sr" data-sp="exp"><span class="tx2"><b>Ekspor ke kalender</b><small id="sub-exp"></small></span><span class="chev">›</span></button><button class="sr" data-sp="bak"><span class="tx2"><b>Cadangan dan data</b><small id="sub-bak"></small></span><span class="chev">›</span></button></div></div>
-<div class="grp"><h4>Aplikasi</h4><div class="sl"><button class="sr" data-sp="abt"><span class="tx2"><b>Tentang</b><small id="sub-abt"></small></span><span class="chev">›</span></button></div></div></section>
+<div class="sp-h"><button class="round" id="sBack" aria-label="Kembali" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><h2 id="sTitle">Pengaturan</h2><button class="round" id="closeS" aria-label="Tutup"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+<section data-p="hub"><div class="grp"><h4>Umum</h4><div class="sl"><button class="sr" data-sp="rem"><span class="tx2"><b>Pengingat</b><small id="sub-rem"></small></span><span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span></button><button class="sr" data-sp="ibd"><span class="tx2"><b>Ibadah</b><small id="sub-ibd"></small></span><span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span></button><button class="sr" data-sp="day"><span class="tx2"><b>Jadwal harian</b><small id="sub-day"></small></span><span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span></button></div></div>
+<div class="grp"><h4>Personalisasi</h4><div class="sl"><button class="sr" data-sp="look"><span class="tx2"><b>Tampilan</b><small id="sub-look"></small></span><span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span></button><button class="sr" data-sp="tpl"><span class="tx2"><b>Template jadwal</b><small id="sub-tpl"></small></span><span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span></button></div></div>
+<div class="grp"><h4>Data</h4><div class="sl"><button class="sr" data-sp="exp"><span class="tx2"><b>Ekspor ke kalender</b><small id="sub-exp"></small></span><span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span></button><button class="sr" data-sp="bak"><span class="tx2"><b>Cadangan dan data</b><small id="sub-bak"></small></span><span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span></button></div></div>
+<div class="grp"><h4>Aplikasi</h4><div class="sl"><button class="sr" data-sp="abt"><span class="tx2"><b>Tentang</b><small id="sub-abt"></small></span><span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span></button></div></div></section>
 <section data-p="rem" hidden><div class="grp"><div class="sl"><label class="sr"><span class="tx2"><b>Pengingat kegiatan</b><small>Notifikasi sebelum kegiatan dimulai</small></span><input type="checkbox" id="rOn" class="tgl" aria-label="Pengingat aktif"></label><div class="sr"><span class="tx2"><b>Waktu pengingat</b><small>Sebelum kegiatan dimulai</small></span><select id="rLead" class="sel"><option value="5">5 menit</option><option value="10">10 menit</option><option value="15">15 menit</option><option value="30">30 menit</option></select></div><div class="sr"><span class="tx2"><b>Notifikasi browser</b><small><span id="rHint"></span></small></span><button class="mini" id="rPerm" style="margin:0"></button></div></div></div>
 <button class="btn g" id="rTest">Uji pengingat sekarang</button><p class="note">Pengingat berbunyi selama aplikasi terbuka atau masih berjalan di latar belakang. Untuk alarm yang selalu berbunyi, gunakan ekspor ke kalender HP.</p></section>
 <section data-p="ibd" hidden><div class="grp"><h4>Waktu shalat hari ini</h4><div class="sl"><div class="pvg" id="pPrev"></div></div></div>
-<div class="grp"><h4>Lokasi</h4><div class="sl"><div class="sr"><span class="tx2"><b>Kota</b><small>Menentukan waktu shalat</small></span><select id="cty" class="sel"></select></div><button class="sr" id="gps"><span class="tx2"><b>Gunakan lokasi saya</b><small>Deteksi otomatis lewat GPS</small></span><span class="chev">›</span></button></div></div>
+<div class="grp"><h4>Lokasi</h4><div class="sl"><div class="sr"><span class="tx2"><b>Kota</b><small>Menentukan waktu shalat</small></span><select id="cty" class="sel"></select></div><button class="sr" id="gps"><span class="tx2"><b>Gunakan lokasi saya</b><small>Deteksi otomatis lewat GPS</small></span><span class="chev"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span></button></div></div>
 <div class="grp"><h4>Durasi</h4><div class="sl"><div class="sr"><span class="tx2"><b>Shalat lima waktu</b><small>Tiap waktu shalat</small></span><select id="pd" class="sel"><option value="5">5 menit</option><option value="10">10 menit</option><option value="15">15 menit</option><option value="20">20 menit</option></select></div><div class="sr"><span class="tx2"><b>Shalat Jumat</b><small>Khutbah dan shalat</small></span><select id="jm" class="sel"><option value="30">30 menit</option><option value="45">45 menit</option><option value="60">60 menit</option></select></div><div class="sr"><span class="tx2"><b>Mengaji 3 lembar</b><small>15 menit per hari</small></span><select id="ng" class="sel"><option value="maghrib">Setelah Maghrib</option><option value="isya">Setelah Isya</option><option value="off">Nonaktif</option></select></div></div></div>
 <p class="note">Waktu dihitung otomatis dengan metode Kemenag RI (Subuh 20°, Isya 18°), selisihnya dengan jadwal resmi sekitar 1–2 menit. Bila bentrok dengan kuliah atau belajar, shalat dipindah ke waktu kosong terdekat sebelum batas waktunya habis.</p></section>
 <section data-p="day" hidden><div class="grp"><div class="sl"><div class="sr"><span class="tx2"><b>Jam bangun</b><small>Shalat Subuh dijadwalkan setelahnya</small></span><input id="wk" type="time" class="sel"></div><div class="sr"><span class="tx2"><b>Jam tidur</b><small>Kegiatan setelahnya diberi tanda</small></span><input id="sl" type="time" class="sel"></div></div></div></section>
-<section data-p="look" hidden><div class="grp"><div class="sl"><div class="sr"><span class="tx2"><b>Tema</b><small>Terang, gelap, atau mengikuti HP</small></span><select id="th" class="sel"><option value="auto">Otomatis</option><option value="light">Terang</option><option value="dark">Gelap</option></select></div><div class="sr"><span class="tx2"><b>Ukuran huruf</b><small>Berlaku di seluruh aplikasi</small></span><select id="fs" class="sel"><option value="15">Kecil</option><option value="16">Normal</option><option value="17">Besar</option></select></div></div></div></section>
+<section data-p="look" hidden><div class="grp"><div class="sl"><div class="sr"><span class="tx2"><b>Tema</b><small>Terang, gelap, atau mengikuti HP</small></span><select id="th" class="sel"><option value="auto">Otomatis</option><option value="light">Terang</option><option value="dark">Gelap</option></select></div><div class="sr"><span class="tx2"><b>Ukuran huruf</b><small>Berlaku di seluruh aplikasi</small></span><select id="fs" class="sel"><option value="15">Kecil</option><option value="16">Normal</option><option value="17">Besar</option></select></div><div class="sr"><span class="tx2"><b>Jarak menu bawah</b><small>Naikkan bila menu bawah terpotong di layarmu</small></span><select id="nb" class="sel"><option value="auto">Otomatis</option><option value="0">Rapat</option><option value="24">Sedang</option><option value="48">Tinggi</option></select></div></div></div></section>
 <section data-p="tpl" hidden><div class="grp"><h4>Tersimpan</h4><div class="sl" id="tplL"></div></div><div class="grp"><h4>Simpan jadwal saat ini</h4><div class="sl"><div class="sr"><input id="tn" class="sel" style="flex:1;min-width:0" maxlength="40" placeholder="Mis. Semester 2" aria-label="Nama template"><button class="mini" id="tsv" style="margin:0">Simpan</button></div></div></div><p class="note">Template menyimpan seluruh jadwal mingguan. Memuat template menggantikan jadwal sekarang, dan bisa diurungkan.</p></section>
 <section data-p="exp" hidden><button class="btn g" id="ics">Buat file kalender (.ics)</button><p class="note">Berisi jadwal mingguan, waktu shalat 30 hari ke depan, pengingat, dan tenggat tugas, lengkap dengan alarm. Di aplikasi yang terpasang, file langsung terunduh. Di halaman ini, teksnya disalin dan muncul di kotak pada menu Cadangan dan data.</p></section>
 <section data-p="bak" hidden><div class="grp"><h4>Cadangan</h4><textarea id="bx" spellcheck="false" placeholder="Hasil cadangan muncul di sini. Tempel cadangan lama di sini untuk memulihkan."></textarea><div class="row" style="margin-top:8px"><button class="btn g" id="bk" style="margin:0">Buat cadangan</button><button class="btn g" id="rs" style="margin:0">Pulihkan</button></div><p class="note">Cadangan mencakup jadwal, centang, pengingat, tugas, keuangan, dan pengaturan. Simpan teksnya di catatan atau kirim ke dirimu sendiri.</p></div>
 <div class="grp"><h4>Reset</h4><button class="btn g" id="reset">Kembalikan jadwal awal</button><button class="btn g" id="wipe" style="margin-top:8px">Hapus semua data</button></div></section>
 <section data-p="abt" hidden><div class="grp"><div class="sl"><div class="sr"><span class="tx2"><b>Jadwal Harianku</b><small>Versi 5.0 · jadwal, kalender, tugas, dan keuangan</small></span></div><div class="sr"><span class="tx2"><b>Privasi</b><small>Semua data tersimpan di browser ini dan tidak dikirim ke server mana pun. Tidak ada akun atau pelacak.</small></span></div><div class="sr"><span class="tx2"><b>Pasang di layar HP</b><small>Gunakan versi terpasang agar tampil layar penuh dan bisa dibuka tanpa internet.</small></span></div><div class="sr"><span class="tx2"><b>Tips</b><small>Ketuk ikon pensil untuk mengubah kegiatan. Buat cadangan tiap pekan. Gunakan tab Review untuk evaluasi tiap Minggu malam.</small></span></div></div></div></section>
 </div></div>
-<div id="sch" class="spage" hidden role="dialog" aria-modal="true" aria-label="Pencarian"><div class="sp-in"><div class="sp-h"><button class="round" id="schBack" aria-label="Tutup pencarian">‹</button><input id="schQ" class="schi" type="search" maxlength="60" placeholder="Cari kegiatan, tugas, pengingat, transaksi" aria-label="Kata kunci"></div><div id="schR"></div></div></div>
-<nav class="bnav" id="bnav" role="tablist"></nav>
-<div id="tmr" class="tmr" hidden></div>
+<div id="sch" class="spage" hidden role="dialog" aria-modal="true" aria-label="Pencarian"><div class="sp-in"><div class="sp-h"><button class="round" id="schBack" aria-label="Tutup pencarian"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><input id="schQ" class="schi" type="search" maxlength="60" placeholder="Cari kegiatan, tugas, pengingat, transaksi" aria-label="Kata kunci"></div><div id="schR"></div></div></div>
 <dialog id="dT"><h3 id="ftT">Tambah tugas</h3>
   <div style="margin-bottom:10px"><label for="tT">Judul tugas</label><input id="tT" type="text" maxlength="80"></div>
   <div class="row"><div><label for="tC">Mata kuliah</label><select id="tC"></select></div><div><label for="tP">Prioritas</label><select id="tP"><option value="1">Rendah</option><option value="2">Sedang</option><option value="3">Tinggi</option></select></div></div>
@@ -242,6 +249,7 @@ button.sr:active,label.sr:active{background:var(--bg)}
 <dialog id="dC"><h3>Kuliah hari ini</h3><p class="note" id="cN"></p><button class="btn g" id="cOnly">Batalkan hari ini saja</button><h4 class="sh">Atau pindahkan ke jadwal pengganti</h4>
   <div class="row"><div><label for="cD">Tanggal</label><input id="cD" type="date"></div><div><label for="cTm">Jam</label><input id="cTm" type="time"></div></div>
   <p class="err" id="cErr" role="alert"></p><button class="btn" id="cMove">Batalkan dan jadwalkan pengganti</button><button class="btn g" id="cBack" style="margin-top:8px">Kembali</button></dialog>
+<nav class="bnav" id="bnav" role="tablist"></nav>
 <div id="toast" class="toast" hidden></div>
 
 <script>
@@ -311,10 +319,10 @@ function load(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function fresh(){let n=0;const o={};for(const d in DEF)o[d]=DEF[d].map(x=>({...x,id:'t'+(n++)}));return o}
 function clean(o){const r={};for(let d=0;d<7;d++){const a=o&&Array.isArray(o[d])?o[d]:[];r[d]=a.filter(x=>x&&typeof x==='object'&&SAFE.test(String(x.id))&&TIME.test(x.s)&&TIME.test(x.e)&&mins(x.e)>mins(x.s)&&Object.prototype.hasOwnProperty.call(CAT,x.c)).slice(0,60).map(x=>({id:String(x.id),s:x.s,e:x.e,c:x.c,n:String(x.n||'').slice(0,60),d:String(x.d||'').slice(0,120),k:/^[a-z]{0,6}$/.test(x.k)?x.k:''}))}return r}
-function cleanST(o){const s=Object.assign({on:true,lead:10,city:'bogor',pd:10,ng:'maghrib',wake:'05:00',sleep:'22:00',jm:45,theme:'auto',fs:16,lat:0,lng:0,tz:7},o&&typeof o==='object'?o:{});
+function cleanST(o){const s=Object.assign({on:true,lead:10,city:'bogor',pd:10,ng:'maghrib',wake:'05:00',sleep:'22:00',jm:45,theme:'auto',fs:16,nb:'auto',lat:0,lng:0,tz:7},o&&typeof o==='object'?o:{});
   s.on=!!s.on;s.lead=[5,10,15,30].includes(+s.lead)?+s.lead:10;s.pd=[5,10,15,20].includes(+s.pd)?+s.pd:10;
   if(!['maghrib','isya','off'].includes(s.ng))s.ng='maghrib';
-  if(!TIME.test(s.wake))s.wake='05:00';if(!TIME.test(s.sleep))s.sleep='22:00';s.jm=[30,45,60].includes(+s.jm)?+s.jm:45;if(!['auto','light','dark'].includes(s.theme))s.theme='auto';s.fs=[15,16,17].includes(+s.fs)?+s.fs:16;
+  if(!TIME.test(s.wake))s.wake='05:00';if(!TIME.test(s.sleep))s.sleep='22:00';s.jm=[30,45,60].includes(+s.jm)?+s.jm:45;if(!['auto','light','dark'].includes(s.theme))s.theme='auto';s.fs=[15,16,17].includes(+s.fs)?+s.fs:16;s.nb=['auto','0','24','48'].includes(String(s.nb))?String(s.nb):'auto';
   if(s.city!=='gps'&&!Object.prototype.hasOwnProperty.call(CITY,s.city))s.city='bogor';
   s.lat=Math.max(-90,Math.min(90,+s.lat||0));s.lng=Math.max(-180,Math.min(180,+s.lng||0));s.tz=Math.max(-12,Math.min(14,+s.tz||7));return s}
 let ST=cleanST(load('atur-v4',null)),NOTE=load('catatan-v4',{}),NT=load('notif-v4',{});
@@ -404,7 +412,7 @@ function dayList(d,ofs){
 }
 function stats(d,o){const key=iso(dateOf(d,o)),l=dayList(d,o).filter(x=>!x.canc);let done=0,sm=0,sp=0;l.forEach(x=>{const m=mins(x.e)-mins(x.s);if(x.c==='belajar')sp+=m;if(D[key+'|'+x.id]){done++;if(x.c==='belajar')sm+=m}});return{n:l.length,done,sm,sp}}
 const pc=s=>s.n?Math.round(s.done/s.n*100):0;
-function toast(msg,label,fn,ms){const el=$('toast');el.innerHTML='<span>'+esc(msg)+'</span>'+(label?'<button class="ta">'+esc(label)+'</button>':'')+'<button class="tx" aria-label="Tutup">×</button>';el.hidden=false;if(label)el.querySelector('.ta').onclick=()=>{fn();el.hidden=true};el.querySelector('.tx').onclick=()=>{el.hidden=true};clearTimeout(tt);tt=setTimeout(()=>{el.hidden=true},ms||5000)}
+function toast(msg,label,fn,ms){const el=$('toast');el.innerHTML='<span>'+esc(msg)+'</span>'+(label?'<button class="ta">'+esc(label)+'</button>':'')+'<button class="tx" aria-label="Tutup"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>';el.hidden=false;if(label)el.querySelector('.ta').onclick=()=>{fn();el.hidden=true};el.querySelector('.tx').onclick=()=>{el.hidden=true};clearTimeout(tt);tt=setTimeout(()=>{el.hidden=true},ms||5000)}
 function reviewHTML(){
   const w=week()+rofs,nowD=new Date();nowD.setHours(0,0,0,0);
   const mon=dateOf(1,rofs),sun=dateOf(0,rofs),fm=x=>x.toLocaleDateString('id-ID',{day:'numeric',month:'short'});
@@ -421,7 +429,7 @@ function reviewHTML(){
   if(lc)ins.push(`Kategori terendah: <b>${CAT[lc][0]}</b> (${Math.round(cat[lc].d/cat[lc].n*100)}%).`);
   ins.push(`Shalat lima waktu lengkap pada <b>${perfect}</b> dari ${counted} hari.`);
   const key=iso(mon);
-  return `<div class="nav"><button class="round" data-rn="-1" aria-label="Pekan sebelumnya" ${w<=0?'disabled':''}>‹</button><b>Pekan ke-${w+1}<small>${fm(mon)} – ${fm(sun)}${rofs===0?' · dihitung sampai hari ini':''}</small></b><button class="round" data-rn="1" aria-label="Pekan berikutnya" ${rofs>=0?'disabled':''}>›</button></div>
+  return `<div class="nav"><button class="round" data-rn="-1" aria-label="Pekan sebelumnya" ${w<=0?'disabled':''}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><b>Pekan ke-${w+1}<small>${fm(mon)} – ${fm(sun)}${rofs===0?' · dihitung sampai hari ini':''}</small></b><button class="round" data-rn="1" aria-label="Pekan berikutnya" ${rofs>=0?'disabled':''}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button></div>
   <div class="rg"><div class="tile"><small>Penyelesaian</small><div class="ring" style="--p:${all}"><b>${all}%</b></div><small>${td} dari ${tn} kegiatan</small></div><div class="tile"><small>Jam belajar</small><b>${hr(sm)} <span class="u">/ ${hr(sp)} jam</span></b><div class="meter"><i style="--p:${sp?Math.min(sm/sp*100,100):0}%"></i></div></div></div>
   ${consistHTML()}<div class="card2"><h3>Progres harian</h3><div class="col">${days.map(x=>`<div class="${x.past?'':'f'}"><span>${x.past?x.p+'%':''}</span><i style="--h:${x.past?Math.max(x.p,3):3}%"></i><span>${DAYS[x.d].slice(0,3)}</span></div>`).join('')}</div></div>
   <div class="card2"><h3>Per jenis kegiatan</h3>${cats.map(c=>`<div class="mr ${CAT[c][1]}"><span>${CAT[c][0]}</span><div class="meter"><i style="--p:${Math.round(cat[c].d/cat[c].n*100)}%"></i></div><b>${cat[c].d}/${cat[c].n}</b></div>`).join('')||'<p class="ins">Belum ada data.</p>'}</div>
@@ -461,7 +469,7 @@ function render(){
     const lg=LOG[key+'|'+x.id],lgt=lg&&MET[x.k]?'Tercatat: '+MET[x.k].filter(m=>lg[m[0]]!=null).map(m=>f(+lg[m[0]])+' '+m[2]).join(', '):'';
     const desc=[tg(x.k,LV[x.k]||0),x.d,lgt].filter(Boolean).join(' · ');
     const ac=x.canc?`<button class="mini" data-rc="${esc(x.id)}">Aktifkan kembali</button>`:(MET[x.k]?`<button class="mini" data-lg="${esc(x.id)}">Catat hasil</button>`:'')+(FOC.includes(x.k)?`<button class="mini" data-fo="${esc(x.id)}">Mulai fokus</button>`:'')+(x.c==='kuliah'&&!x.auto&&!x.ev?`<button class="mini" data-kc="${esc(x.id)}">Batal / pindah</button>`:'');
-    return `<li class="${CAT[x.c][1]}"><div class="tm"><b>${x.s}</b>${x.end||x.e}</div><div class="dot"></div><div class="cd${ck?' done':''}${isNow?' now':''}${x.canc?' canc':''}"><input type="checkbox" class="chk" data-id="${esc(x.id)}" ${ck?'checked':''} ${x.canc?'disabled':''} aria-label="Selesai: ${esc(x.n)}"><div class="bd"><div class="t">${esc(x.n)}</div><div class="mt"><span class="chip">${CAT[x.c][0]}</span>${x.canc?'<span class="chip r">Dibatalkan</span>':''}${isNow?'<span class="chip a">Sekarang</span>':''}${clash?'<span class="chip r">Bentrok</span>':''}${late?'<span class="chip r">Lewat jam tidur</span>':''}${esc(desc)}</div>${ac?`<div class="ac">${ac}</div>`:''}</div>${x.auto||x.canc?'':x.ev?`<button class="ic" data-ee="${esc(x.id.slice(2))}" aria-label="Ubah ${esc(x.n)}">${IE}</button>`:`<button class="ic" data-ed="${esc(x.id)}" aria-label="Ubah ${esc(x.n)}">${IE}</button><button class="ic" data-del="${esc(x.id)}" aria-label="Hapus ${esc(x.n)}">${ID}</button>`}</div></li>`}).join('')
+    return `<li class="${CAT[x.c][1]}${isNow?' nw':''}"><div class="tm"><b>${x.s}</b>${x.end||x.e}</div><div class="dot"></div><div class="cd${ck?' done':''}${isNow?' now':''}${x.canc?' canc':''}"><input type="checkbox" class="chk" data-id="${esc(x.id)}" ${ck?'checked':''} ${x.canc?'disabled':''} aria-label="Selesai: ${esc(x.n)}"><div class="bd"><div class="t">${esc(x.n)}</div><div class="mt"><span class="chip">${CAT[x.c][0]}</span>${x.canc?'<span class="chip r">Dibatalkan</span>':''}${clash?'<span class="chip r">Bentrok</span>':''}${late?'<span class="chip r">Lewat jam tidur</span>':''}${esc(desc)}</div>${ac?`<div class="ac">${ac}</div>`:''}</div>${x.auto||x.canc?'':x.ev?`<button class="ic" data-ee="${esc(x.id.slice(2))}" aria-label="Ubah ${esc(x.n)}">${IE}</button>`:`<button class="ic" data-ed="${esc(x.id)}" aria-label="Ubah ${esc(x.n)}">${IE}</button><button class="ic" data-del="${esc(x.id)}" aria-label="Hapus ${esc(x.n)}">${ID}</button>`}</div></li>`}).join('')
   :'<li style="display:block"><div class="empty">Belum ada kegiatan pada hari ini.</div></li>';
 }
 const MS=864e5,dOf=s=>{const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
@@ -500,7 +508,7 @@ function finHTML(){
   list.forEach(x=>{if(x.dt!==last){last=x.dt;const dd=dOf(x.dt),tt=list.filter(y=>y.dt===x.dt&&y.type==='out').reduce((a,y)=>a+y.amt,0);rows+=`<div class="trh"><span>${DAYS[dd.getDay()]}, ${dd.getDate()} ${MON[dd.getMonth()].slice(0,3)}</span><span>${tt?'− '+rp(tt):''}</span></div>`}
     const cn=FC[x.type][x.cat];rows+=`<div class="trx"><div><b>${esc(x.note||cn)}</b><span>${cn} · ${WL[x.wal]}</span></div><strong class="${x.type}">${x.type==='in'?'+':'−'} ${rp(x.amt)}</strong><button class="ic" data-xe="${esc(x.id)}" aria-label="Ubah transaksi">${IE}</button></div>`});
   const opts=Object.entries(FC.out).concat(Object.entries(FC.in)).map(([k,v])=>`<option value="${k}"${ff===k?' selected':''}>${v}</option>`).join('');
-  return `<div class="nav"><button class="round" data-fm="-1" aria-label="Bulan sebelumnya">‹</button><b>${MON[fmo]} ${fy}<small>${tx.length} transaksi</small></b><button class="round" data-fm="1" aria-label="Bulan berikutnya">›</button></div>
+  return `<div class="nav"><button class="round" data-fm="-1" aria-label="Bulan sebelumnya"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><b>${MON[fmo]} ${fy}<small>${tx.length} transaksi</small></b><button class="round" data-fm="1" aria-label="Bulan berikutnya"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button></div>
   <div class="fh"><small>Pengeluaran ${MON[fmo]}</small><h2>${rp(out)}</h2><small>Rata-rata ${rp(avg)} per hari${cur?' · proyeksi akhir bulan '+rp(proj):''}</small>${bt?`<div class="meter"><i style="--p:${Math.min(out/bt*100,100)}%"></i></div><small>Anggaran ${rp(bt)} · ${bt>=out?'sisa '+rp(bt-out):'melebihi '+rp(out-bt)}</small>`:''}</div>
   <div class="ft"><div class="tile"><small>Pemasukan</small><b>${rp(inn)}</b></div><div class="tile"><small>Selisih</small><b>${inn-out<0?'− ':''}${rp(Math.abs(inn-out))}</b></div><div class="tile"><small>Total saldo</small><b>${tot<0?'− ':''}${rp(Math.abs(tot))}</b></div></div>
   <div class="card2"><h3>Pengeluaran per hari</h3><div class="dbars">${bd.map((v,i)=>`<i class="${cur&&i+1===now.getDate()?'t':v?'v':''}" style="--h:${v?Math.max(v/mx*100,8):3}%"></i>`).join('')}</div><div class="ax"><span>1</span><span>${dim}</span></div></div>
@@ -562,7 +570,7 @@ function calHTML(){
     cells+=`<button class="cl${k===tdy?' td':''}${k===csel?' sl':''}" data-cd="${k}" aria-label="${n} ${MON[cmo]}${evs.length?', '+evs.length+' pengingat':''}"><b>${n}</b><span>${evs.slice(0,3).map(()=>'<u></u>').join('')}</span></button>`}
   const[y,m,d]=csel.split('-').map(Number),sd=new Date(y,m-1,d),sev=EV.filter(e=>occurs(e,sd)).sort((a,b)=>(a.t||'').localeCompare(b.t||''));
   const REP={none:'',week:'Setiap pekan',month:'Setiap bulan',year:'Setiap tahun'};
-  return `<div class="nav"><button class="round" data-cm="-1" aria-label="Bulan sebelumnya">‹</button><b>${MON[cmo]} ${cy}<small>${dim} hari${leap(cy)?' · tahun kabisat':''}</small></b><button class="round" data-cm="1" aria-label="Bulan berikutnya">›</button></div>
+  return `<div class="nav"><button class="round" data-cm="-1" aria-label="Bulan sebelumnya"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><b>${MON[cmo]} ${cy}<small>${dim} hari${leap(cy)?' · tahun kabisat':''}</small></b><button class="round" data-cm="1" aria-label="Bulan berikutnya"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button></div>
   <div class="cal"><div class="cw">${['Sen','Sel','Rab','Kam','Jum','Sab','Min'].map(x=>`<span>${x}</span>`).join('')}</div><div class="cg">${cells}</div></div>
   <div class="sec"><h2>${DAYS[sd.getDay()]}, ${d} ${MON[m-1]} ${y}</h2><button class="lnk" data-cnow>Hari ini</button></div>
   ${sev.length?sev.map(e=>`<div class="evr"><div><b>${e.t?e.t+' · ':''}${esc(e.n)}</b><span>${[e.note,REP[e.rep],e.lead<0?'':e.lead===0?'Diingatkan tepat waktu':e.lead===1440?'Diingatkan 1 hari sebelumnya':'Diingatkan '+e.lead+' menit sebelumnya'].filter(Boolean).map(esc).join(' · ')}</span></div><button class="ic" data-ee="${esc(e.id)}" aria-label="Ubah ${esc(e.n)}">${IE}</button></div>`).join(''):'<div class="empty">Belum ada pengingat atau catatan pada tanggal ini.</div>'}
@@ -578,7 +586,7 @@ function openForm(x){
 }
 function permText(){return !('Notification' in window)?'Notifikasi browser tidak didukung':Notification.permission==='granted'?'Notifikasi browser aktif':Notification.permission==='denied'?'Notifikasi diblokir di browser':'Izinkan notifikasi browser'}
 function permUI(){const n='Notification' in window,p=n?Notification.permission:'';$('rPerm').textContent=!n?'Tidak didukung':p==='granted'?'Aktif':p==='denied'?'Diblokir':'Izinkan';$('rHint').textContent=!n?'Browser ini tidak mendukung notifikasi':p==='granted'?'Notifikasi muncul di layar HP-mu':p==='denied'?'Diblokir. Ubah lewat pengaturan situs di browser, atau pasang aplikasi ke layar utama':'Ketuk Izinkan untuk menerima notifikasi'}
-function openSet(){$('rOn').checked=ST.on;$('rLead').value=ST.lead;$('cty').value=ST.city;$('pd').value=ST.pd;$('ng').value=ST.ng;$('wk').value=ST.wake;$('sl').value=ST.sleep;$('jm').value=ST.jm;$('th').value=ST.theme;$('fs').value=ST.fs;permUI();tplDraw();showPage('hub');$('dS').showModal()}
+function openSet(){$('rOn').checked=ST.on;$('rLead').value=ST.lead;$('cty').value=ST.city;$('pd').value=ST.pd;$('ng').value=ST.ng;$('wk').value=ST.wake;$('sl').value=ST.sleep;$('jm').value=ST.jm;$('th').value=ST.theme;$('fs').value=ST.fs;$('nb').value=ST.nb;permUI();tplDraw();showPage('hub');$('dS').showModal()}
 $('d').innerHTML=ORDER.map(d=>`<option value="${d}">${DAYS[d]}</option>`).join('');
 $('cty').innerHTML=Object.keys(CITY).map(k=>`<option value="${k}">${CITY[k][0]}</option>`).join('')+'<option value="gps">Lokasi saya (GPS)</option>';
 document.addEventListener('click',e=>{
@@ -657,6 +665,7 @@ function doCancel(move){const key=iso(dateOf(sel,0)),x=S[sel].find(y=>y.id===kcI
 $('cOnly').onclick=()=>doCancel(false);$('cMove').onclick=()=>doCancel(true);
 $('th').onchange=e=>{ST.theme=e.target.value;applyLook();save('atur-v4',ST)};
 $('fs').onchange=e=>{ST.fs=+e.target.value;applyLook();save('atur-v4',ST)};
+$('nb').onchange=e=>{ST.nb=e.target.value;save('atur-v4',ST);setBO()};
 $('tsv').onclick=()=>{const n=$('tn').value.trim().slice(0,40);if(!n){toast('Beri nama template terlebih dahulu');return}TPL.push({id:'p'+Date.now().toString(36),n,S:JSON.parse(JSON.stringify(S))});save('templat-v5',TPL);$('tn').value='';tplDraw();toast('Template disimpan')};
 $('ics').onclick=()=>{const t=icsBuild();$('bx').value=t;try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/calendar'}));a.download='jadwal-harianku.ics';a.click()}catch(e){}try{navigator.clipboard.writeText(t).then(()=>toast('File .ics dibuat dan teksnya disalin. Simpan sebagai jadwal.ics bila tidak terunduh.'))}catch(e){toast('File .ics dibuat. Salin teks di kotak cadangan lalu simpan sebagai jadwal.ics.')}};
 setInterval(tmrTick,1000);tmrShow();
@@ -726,6 +735,8 @@ function goTo(g){const[k,v]=g.split('|');closeSch();
 $('srch').onclick=()=>{$('sch').hidden=false;document.body.style.overflow='hidden';$('schQ').value='';drawSearch();$('schQ').focus()};
 $('schQ').oninput=drawSearch;$('schBack').onclick=closeSch;
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('sch').hidden)closeSch();else if(!$('dS').hidden)$('dS').close()}});
+function setBO(){let b=0;if(ST.nb==='auto'){try{if(window.top!==window)b=44}catch(e){b=44}const vv=window.visualViewport;if(vv&&vv.scale<=1.01)b+=Math.max(0,Math.round(window.innerHeight-vv.height-vv.offsetTop))}else b=+ST.nb;document.documentElement.style.setProperty('--bo',b+'px')}
+setBO();addEventListener('resize',setBO);if(window.visualViewport)visualViewport.addEventListener('resize',setBO);
 render();tick();setInterval(()=>{render();tick()},30000);
 </script>
 <script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))</script>
