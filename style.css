@@ -161,4 +161,7 @@ body.locked main,body.locked .bnav,body.locked .fab,body.locked .tmr{visibility:
 .tr6{display:flex;gap:8px;height:100px}.tr6>div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;justify-content:flex-end}.pr{display:flex;gap:3px;align-items:flex-end;height:80px;width:100%;justify-content:center}.pr i{width:40%;height:var(--h);min-height:2px;background:var(--ink);border-radius:3px 3px 1px 1px}.pr i.in{background:var(--acc)}.tr6 small{font-size:.7rem;color:var(--mute)}
 .trx strong.tf{color:var(--mute)}
 
+.cw,.cg{grid-template-columns:repeat(7,minmax(0,1fr))}
+.cl{aspect-ratio:auto;min-height:58px;min-width:0;width:100%;padding:2px 0}
+#splash{padding:24px;font:16px/1.5 system-ui,sans-serif;color:#14202e;background:#e9eef4}
 .cl em{font-style:normal;font-size:.6rem;color:var(--mute);line-height:1}.cl.sl em{color:var(--onhero);opacity:.8}.cl u.hb{background:var(--ibadah)}

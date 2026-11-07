@@ -506,9 +506,9 @@ function showPage(p){spg=p;document.querySelectorAll('[data-p]').forEach(s=>{s.h
 {const d=$('dS');d.showModal=()=>{d.hidden=false;document.body.style.overflow='hidden'};d.close=()=>{d.hidden=true;document.body.style.overflow=''}}
 $('sBack').onclick=()=>showPage('hub');
 $('rTest').onclick=()=>ring('Ini contoh pengingat dari Jadwal Harianku.');
-let wipeArm=false;
-$('wipe').onclick=()=>{if(!wipeArm){wipeArm=true;$('wipe').textContent='Yakin? Ketuk sekali lagi untuk menghapus semuanya';setTimeout(()=>{wipeArm=false;$('wipe').textContent='Hapus semua data'},4000);return}
-  wipeArm=false;$('wipe').textContent='Hapus semua data';S=fresh();D={};EV=[];TK=[];LOG={};CANC={};REF={};TPL=[];NOTE={};FIN=cleanFIN(null);ST=cleanST(null);TM=null;NT={i:[]};
+let wipeArm=false,wipeOK=false;
+$('wipe').onclick=()=>{if(BOOT.has()&&!wipeOK){BOOT.verify(()=>{wipeOK=true;$('wipe').onclick()});return}if(!wipeArm){wipeArm=true;$('wipe').textContent='Yakin? Ketuk sekali lagi untuk menghapus semuanya';setTimeout(()=>{wipeArm=false;wipeOK=false;$('wipe').textContent='Hapus semua data'},4000);return}
+  wipeArm=false;wipeOK=false;$('wipe').textContent='Hapus semua data';S=fresh();D={};EV=[];TK=[];LOG={};CANC={};REF={};TPL=[];NOTE={};FIN=cleanFIN(null);ST=cleanST(null);TM=null;NT={i:[]};
   save('jadwal-v4',S);save('selesai-v4',D);save('acara-v5',EV);save('tugas-v5',TK);save('hasil-v5',LOG);save('batal-v5',CANC);save('refleksi-v5',REF);save('templat-v5',TPL);save('catatan-v4',NOTE);save('uang-v5',FIN);save('atur-v4',ST);save('timer-v5',TM);save('notif-v4',NT);
   applyLook();tmrShow();$('dS').close();render();toast('Semua data telah dihapus')};
 /* pencarian */
@@ -531,13 +531,14 @@ $('srch').onclick=()=>{$('sch').hidden=false;document.body.style.overflow='hidde
 $('schQ').oninput=drawSearch;$('schBack').onclick=closeSch;
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('sch').hidden)closeSch();else if(!$('dS').hidden)$('dS').close()}});
 /* ===== keamanan (PIN dan enkripsi dikelola boot.js) ===== */
-function pinUI(){const h=BOOT.has(),c=BOOT.cfg();$('pinSt').textContent=h?'Aktif, data terenkripsi':'Belum diatur';$('pinB').textContent=h?'Ubah':'Atur';$('pinR').hidden=!h;$('pinX').hidden=!h;$('lkDl').disabled=!h;$('lkW').disabled=!h;if(h){$('lkDl').value=String(c.delay);$('lkW').value=String(c.wipe)}}
+function pinUI(){const h=BOOT.has(),c=BOOT.cfg();$('pinSt').textContent=h?'Aktif, data terenkripsi':'Belum diatur';$('pinB').textContent=h?'Ubah':'Atur';$('pinR').hidden=!h;$('pinX').hidden=!h;$('lkDl').disabled=!h;$('lkW').disabled=!h;$('bioRow').hidden=!h;if(h){$('lkDl').value=String(c.delay);$('lkW').value=String(c.wipe);BOOT.bioSupported().then(s=>{const on=BOOT.bioHas();$('bioSt').textContent=on?'Aktif':s?'Belum diaktifkan':'Tidak didukung di perangkat ini';$('bioB').textContent=on?'Nonaktifkan':'Aktifkan';$('bioB').disabled=!on&&!s})}}
 const pinDone=()=>{pinUI();setSub();toast('PIN 8 digit aktif, data terenkripsi')};
 $('pinB').onclick=()=>{if(!BOOT.ok()){toast('PIN memerlukan koneksi aman (https).');return}BOOT.has()?BOOT.verify(()=>BOOT.setNew(pinDone)):BOOT.setNew(pinDone)};
 $('pinR').onclick=()=>BOOT.verify(async()=>{await BOOT.remove();pinUI();setSub();toast('PIN dihapus, data tidak lagi dienkripsi')});
 $('pinX').onclick=()=>{$('dS').close();BOOT.lock()};
 $('lkDl').onchange=e=>BOOT.cfgSet({delay:+e.target.value});
 $('lkW').onchange=e=>BOOT.cfgSet({wipe:+e.target.value});
+$('bioB').onclick=()=>{if(BOOT.bioHas())BOOT.verify(()=>{BOOT.bioRemove();pinUI();toast('Sidik jari dinonaktifkan')});else BOOT.verify(async()=>{try{await BOOT.bioEnroll();pinUI();toast('Sidik jari aktif. Aplikasi bisa dibuka dengan sidik jari.')}catch(e){toast('Gagal mengaktifkan sidik jari. Browser atau HP ini mungkin belum mendukung.')}})};
 /* ===== keuangan lanjutan ===== */
 function postRec(){let ch=false;const now=midn();FIN.rec.forEach(r=>{let[y,m]=(r.last||iso(now).slice(0,7)).split('-').map(Number);for(let i=0;i<24;i++){m++;if(m>12){m=1;y++}const dt=new Date(y,m-1,Math.min(r.dom,new Date(y,m,0).getDate()));if(dt>now)break;FIN.tx.push({id:'r'+Date.now().toString(36)+i+r.id.slice(0,10),dt:iso(dt),type:r.type,cat:r.cat,wal:r.wal,wal2:'',amt:r.amt,note:r.note||FC[r.type][r.cat]});r.last=y+'-'+String(m).padStart(2,'0');ch=true}});if(ch){FIN=cleanFIN(FIN);save('uang-v5',FIN)}}
 function budWarn(o){if(o.type!=='out'||!FIN.bud[o.cat])return '';const mk=o.dt.slice(0,7),s=FIN.tx.filter(x=>x.type==='out'&&x.cat===o.cat&&x.dt.startsWith(mk)).reduce((a,x)=>a+x.amt,0),p=Math.round(s/FIN.bud[o.cat]*100);return p>=100?`Anggaran ${FC.out[o.cat]} terlampaui (${p}%)`:p>=80?`Anggaran ${FC.out[o.cat]} sudah ${p}% terpakai`:''}

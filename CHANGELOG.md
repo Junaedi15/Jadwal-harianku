@@ -1,5 +1,17 @@
 # Catatan Versi
 
+## 6.3
+- Tombol Lupa PIN tidak lagi menghapus data. Sekarang hanya menjelaskan jalan keluarnya.
+- Sidik jari (atau kunci layar HP) bisa dipakai membuka aplikasi lewat WebAuthn. Ia membuka kunci enkripsi yang sama, jadi PIN bisa diganti tanpa kehilangan data.
+- Kunci data kini berupa kunci utama acak yang dibungkus PIN, sehingga mengganti PIN tidak perlu mengenkripsi ulang seluruh data. Data format lama dimigrasikan otomatis.
+- Hapus semua data di Pengaturan wajib memverifikasi PIN atau sidik jari.
+- Kalender: kolom tanggal tidak lagi melebar keluar kartu.
+
+## 6.2
+- Pembaruan langsung terpakai: service worker kini mengutamakan jaringan dan hanya memakai cache saat offline atau gagal, serta tidak menyimpan halaman "tidak ditemukan".
+- Alamat file memakai nomor versi agar tidak terjebak cache lama.
+- Muncul pesan penjelasan bila file aplikasi belum termuat lengkap, bukan halaman polos tanpa keterangan.
+
 ## 6.1
 - Kartu pengingat cadangan dihapus dari halaman Jadwal. Keterangan cadangan terakhir kini tampil di Pengaturan, menu Cadangan dan data.
 

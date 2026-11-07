@@ -23,14 +23,19 @@ Urutan muat: `app.js` (hanya mendefinisikan fungsi mulai), lalu `boot.js` yang m
 
 ## Memperbarui
 
-Ganti file yang berubah di repositori, lalu buka aplikasi dua kali: pembukaan pertama mengunduh versi baru di latar belakang, pembukaan kedua memakainya. Naikkan angka `V` di `sw.js` setiap kali ada pembaruan agar cache lama dibersihkan.
+Unggah semua file yang berubah **dalam satu commit**, tunggu 1 sampai 2 menit sampai GitHub Pages selesai menerbitkan, lalu buka aplikasi. Naikkan angka `V` di `sw.js` dan nomor `?v=` di `index.html` setiap kali ada pembaruan.
+
+### Jika tampilan polos atau kosong
+
+Biasanya sebagian file belum terbit atau browser menyimpan hasil "tidak ditemukan" untuk sementara. Buka `.../style.css` dan `.../boot.js` langsung di browser untuk memastikan keduanya terbuka, lalu uji di tab penyamaran (tanpa cache). Hapus data situs hanya sebagai langkah terakhir dan setelah membuat cadangan, karena data aplikasi ikut terhapus.
 
 ## Keamanan
 
 - Aturan CSP ketat: skrip hanya dari file sendiri, tanpa skrip inline, tanpa permintaan ke server luar, tanpa font luar.
 - PIN 8 digit mengenkripsi seluruh data dengan AES-256-GCM. Kunci diturunkan dari PIN memakai PBKDF2-SHA256 (200.000 putaran) dengan salt acak. Kunci hanya ada di memori.
+- Sidik jari adalah cara lain membuka kunci yang sama (WebAuthn dengan ekstensi PRF). Yang diverifikasi adalah biometrik yang terdaftar di Android; aplikasi tidak bisa mendaftarkan atau membedakan sidik jari sendiri. Tombol Lupa PIN tidak menghapus data.
 - Percobaan PIN salah ditahan setelah 5 kali. Ada opsi hapus data otomatis setelah 10 atau 20 kali salah.
-- PIN yang lupa tidak bisa dipulihkan. Buat cadangan secara berkala (menu Pengaturan, Cadangan dan data). Cadangan bisa diberi kata sandi.
+- PIN yang lupa dan tanpa sidik jari tidak bisa dipulihkan. Buat cadangan secara berkala (menu Pengaturan, Cadangan dan data). Cadangan bisa diberi kata sandi.
 - Semua data yang dibaca dari penyimpanan atau hasil pemulihan divalidasi sebelum dipakai.
 - Batas yang jujur: enkripsi melindungi data yang tersimpan, bukan saat aplikasi sedang terbuka di depan orang lain.
 - Data hanya disimpan di browser perangkat ini. Hanya kunci milik aplikasi yang dibaca atau dihapus, jadi aplikasi lain di alamat yang sama tidak tersentuh.
